@@ -56,10 +56,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        
-
         <div className="navbar-end">
-        
         
           {
             user?.email ?<div className="dropdown dropdown-end">
@@ -67,9 +64,15 @@ const Navbar = () => {
           
           <div className="w-10 rounded-full">
   
-            <img src={user.photoURL} alt={userDefaultPic} />
+            {
+              user.photoURL ? <img src={user.photoURL} /> : <img src={userDefaultPic}/>
+            }
+
           </div>
+          
           </label>
+
+          
           <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li>
               <button className="btn btn-sm btn-ghost">{user.displayName}</button>
@@ -84,6 +87,11 @@ const Navbar = () => {
             </Link>
           }
         </div>
+        <div>
+            {
+              user ? <button onClick={handleSignOut} className="btn btn-sm">Sign Out</button>:''
+            }
+          </div>
       </div>
     </div>
   );

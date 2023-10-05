@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 const Login = () => {
   const {logIn} = useContext(AuthContext)
@@ -9,6 +9,7 @@ const Login = () => {
   console.log('location in the login page', location);
  
   const navigate = useNavigate()
+  const [error,setError] =useState('')
 
     const handleLogin=(e)=>{
       e.preventDefault();
@@ -21,10 +22,12 @@ const Login = () => {
         console.log(result.user);
 
         //navigate after login
-
         navigate(location?.state ? location.state : '/')
       })
-      .catch(error=>console.error(error))
+      .catch(error=>{
+        setError('Wrong password')
+        console.error(error)
+      })
     }
   return (
     <div>
@@ -63,6 +66,7 @@ const Login = () => {
           </div>
           <div className="form-control mt-6">
             <button className="btn btn-primary">Login</button>
+            <p className="text-red-500">{error}</p>
             <p>you do not have account? 
                 <Link to="/register" className="text-red-400 p-4">Register</Link>
             </p>

@@ -1,15 +1,17 @@
 
-import {  toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Shared/Navbar/Navbar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const Register = () => {
 
   const {createUser, handleUpdateProfile} = useContext(AuthContext)
+  const [error,setError] =useState('')
+  const navigate =useNavigate()
 
   const handleRegister=(e)=>{
     e.preventDefault();
@@ -19,18 +21,29 @@ const Register = () => {
     const password = e.target.password.value;
     console.log(email,password);
 
+    
+
     createUser(email,password)
     .then(result=>{
       handleUpdateProfile(name,photo)
       .then(()=>{
-        toast("Wow so easy!");
-        Navigate('/')
+        
+        navigate('/')
 
       })
-      console.log(result.user);
+      // console.log(result.user);
     })
-    .catch(error=>console.error(error))
+    .catch(error=>{
+      // toast.error('Password should be at least 6 characters')
+      if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password) ){
+        setError('Minimum eight characters, at least one letter and one number');
+       }
+      // console.error(error)
+    })
   }
+
+  
+  
     return (
         <div>
             <Navbar></Navbar>
@@ -89,15 +102,17 @@ const Register = () => {
                 Forgot password?
               </a>
             </label>
+            <p className='text-red-500'>{error}</p>
           </div>
           <div className="form-control mt-6">
-            <button className="btn btn-primary">Login</button>
+            <button  className="btn btn-primary">Register</button>
             <p> Already you  have account? 
-                <Link to="/login" className="text-blue-500 pl-2">Login</Link>
+                <Link to="/login" className="text-blue-500 pl-2">login</Link>
             </p>
           </div>
         </form>
       </div>
+      <ToastContainer></ToastContainer>
         </div>
     );
 };
