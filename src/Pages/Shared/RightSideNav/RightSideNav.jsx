@@ -5,17 +5,26 @@ import qZone3 from '../../../assets/qZone3.png'
 import { useContext } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const RightSideNav = () => {
-    const {googleLogin} =useContext(AuthContext);
+    const {googleLogin,githubLogin} =useContext(AuthContext);
 
     const handleGoogleLogin=()=>{
         googleLogin()
         .then(result=>{
             console.log(result.user);
-            alert('google login')
+            toast.success('google login')
         })
         .catch(error=>console.error(error))
-    
+    }
+    const handleGithubLogin=()=>{
+        githubLogin()
+        .then(result =>{
+            toast.success('github login')
+        })
+        .catch(error=>console.error(error))
     }
    
     
@@ -29,7 +38,8 @@ const RightSideNav = () => {
                 <FaGoogle></FaGoogle>
                 Google login
             </button>
-            <button className="btn btn-outline w-full">
+            <button onClick={handleGithubLogin}
+             className="btn btn-outline w-full">
                 <FaGithub></FaGithub>
                 GitHub login
             </button>
@@ -61,7 +71,7 @@ const RightSideNav = () => {
 
             </div>
 
-            
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

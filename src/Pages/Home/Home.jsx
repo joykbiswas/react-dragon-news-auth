@@ -18,16 +18,16 @@ const Home = () => {
             <Navbar></Navbar>
             <h2 className="text-2xl font-poppins font-bold">This is Home</h2>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-5 ">
-                <div className="border">
+                <div className="">
                     <LeftSideNav></LeftSideNav>
                 </div>
-                <div className="col-span-2 border">
+                <div className="col-span-2 ">
                     <h2>News{news.length}</h2>
                     {
                         news.map(aNews=><NewsCard key={aNews._id} news={aNews}></NewsCard>)
                     }
                 </div>
-                <div className="border">
+                <div className="">
                     <RightSideNav></RightSideNav>
                 </div>
             </div>

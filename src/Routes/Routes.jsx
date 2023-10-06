@@ -5,11 +5,13 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import News from "../Pages/News/News";
 import PrivateRouter from "./PrivateRouter";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 const routers = createBrowserRouter([
     {
         path:"/",
         element:<Root></Root>,
+        error:<ErrorPage></ErrorPage>,
         children:[
             {
                 path:"/",
